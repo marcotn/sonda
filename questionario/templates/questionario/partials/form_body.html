@@ -34,6 +34,19 @@
           </div>
         {% endfor %}
       </div>
+    {% elif field.field.widget.input_type == "checkbox" %}
+      <div class="opzioni">
+        {% for choice_value, choice_label in field.field.choices %}
+          <div class="opzione">
+            <input type="checkbox"
+                   name="{{ field.html_name }}"
+                   id="{{ field.auto_id }}_{{ forloop.counter }}"
+                   value="{{ choice_value }}"
+                   {% if field.value and choice_value in field.value %}checked{% endif %}>
+            <label for="{{ field.auto_id }}_{{ forloop.counter }}">{{ choice_label }}</label>
+          </div>
+        {% endfor %}
+      </div>
     {% elif field.field.widget.input_type == "textarea" %}
       {{ field }}
     {% else %}

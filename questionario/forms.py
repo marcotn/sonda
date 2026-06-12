@@ -10,6 +10,12 @@ class EmailForm(forms.Form):
 
 
 class RispostaForm(forms.ModelForm):
+    # Q6 ammette più risposte: checkbox al posto dei radio
+    q6_proposta = forms.MultipleChoiceField(
+        choices=Risposta.Proposta.choices,
+        widget=forms.CheckboxSelectMultiple,
+    )
+
     class Meta:
         model = Risposta
         fields = [
@@ -31,7 +37,6 @@ class RispostaForm(forms.ModelForm):
             "q3_impatto_parcheggi": forms.RadioSelect,
             "q4_impatto_via_mazzini": forms.RadioSelect,
             "q5_frequenza_residenti": forms.RadioSelect,
-            "q6_proposta": forms.RadioSelect,
             "q7_note": forms.Textarea(attrs={"rows": 4, "placeholder": "Scrivi qui eventuali proposte o segnalazioni…"}),
             "q8_tipo_attivita": forms.RadioSelect,
             "q9_posizione": forms.RadioSelect,

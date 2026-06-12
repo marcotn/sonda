@@ -1,3 +1,5 @@
+from collections import Counter
+
 from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core import signing
@@ -106,6 +108,17 @@ def dashboard(request):
             for r in qs
         ]
 
+    # Q6 è a risposta multipla (ArrayField): si contano le singole opzioni,
+    # quindi le percentuali (sul totale dei rispondenti) possono superare 100.
+    conteggio_q6 = Counter(
+        scelta for scelte in Risposta.objects.values_list("q6_proposta", flat=True) for scelta in scelte
+    )
+    q6 = [
+        {"label": label, "n": conteggio_q6[valore], "pct": round(conteggio_q6[valore] / totale * 100) if totale else 0}
+        for valore, label in Risposta.Proposta.choices
+        if conteggio_q6[valore]
+    ]
+
     context = {
         "totale": totale,
         "q1": freq("q1_giro_affari", Risposta.GiroAffari),
@@ -113,7 +126,7 @@ def dashboard(request):
         "q3": freq("q3_impatto_parcheggi", Risposta.ImpattoParcheggi),
         "q4": freq("q4_impatto_via_mazzini", Risposta.ImpattoViaMazzini),
         "q5": freq("q5_frequenza_residenti", Risposta.FrequenzaResidenti),
-        "q6": freq("q6_proposta", Risposta.Proposta),
+        "q6": q6,
         "q8": freq("q8_tipo_attivita", Risposta.TipoAttivita),
         "q9": freq("q9_posizione", Risposta.PosizioneAttivita),
         "q10": freq("q10_contatto_disponibile", Risposta.DisponibileContatto),

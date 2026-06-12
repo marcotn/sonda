@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
@@ -71,7 +72,8 @@ class Risposta(models.Model):
     q3_impatto_parcheggi = models.CharField(max_length=20, choices=ImpattoParcheggi.choices)
     q4_impatto_via_mazzini = models.CharField(max_length=20, choices=ImpattoViaMazzini.choices)
     q5_frequenza_residenti = models.CharField(max_length=10, choices=FrequenzaResidenti.choices)
-    q6_proposta = models.CharField(max_length=25, choices=Proposta.choices)
+    # Risposta multipla: lista di valori di Proposta
+    q6_proposta = ArrayField(models.CharField(max_length=25, choices=Proposta.choices), default=list)
     q7_note = models.TextField(blank=True)
     q8_tipo_attivita = models.CharField(max_length=20, choices=TipoAttivita.choices)
     q9_posizione = models.CharField(max_length=15, choices=PosizioneAttivita.choices)
