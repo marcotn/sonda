@@ -1,4 +1,5 @@
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.core.exceptions import SignupClosedException
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 
@@ -21,9 +22,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             try:
                 existing = User.objects.get(email=user.email)
             except User.DoesNotExist:
-                from allauth.socialaccount.models import SignupClosedException
                 raise SignupClosedException()
             if not existing.is_staff:
-                from allauth.socialaccount.models import SignupClosedException
                 raise SignupClosedException()
             sociallogin.connect(request, existing)
