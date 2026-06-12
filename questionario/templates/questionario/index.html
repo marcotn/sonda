@@ -1,0 +1,31 @@
+{% extends "questionario/base.html" %}
+{% load static %}
+
+{% block title %}Questionario Commercianti — Viabilità e Sosta{% endblock %}
+
+{% block content %}
+<div class="survey-header">
+  <img class="survey-logo" src="{% static 'images/FUTURO_INSIEME_logo.svg' %}" alt="Futuro Insieme">
+  <div class="survey-gruppo">Futuro Insieme — Gruppo consiliare del Comune di Mezzolombardo (Trento)</div>
+  <h1>Questionario per i commercianti</h1>
+  <div class="subtitle">Viabilità e sosta nel centro — raccolta opinioni</div>
+</div>
+
+<div class="survey-intro">
+  Siamo Futuro Insieme, gruppo consiliare del Comune di Mezzolombardo (Trento). Stiamo raccogliendo le opinioni dei commercianti riguardo alle modifiche alla viabilità e alla sosta introdotte lo scorso anno nel centro. Ci vogliono circa 5 minuti. Le risposte ci aiuteranno a costruire una proposta concreta in consiglio comunale. Grazie per il tempo.
+</div>
+
+{% if gia_compilato %}
+<div class="survey-intro" style="border-left-color:#e67e22;color:#7a4400;margin-bottom:1rem">
+  Ha già compilato questo questionario. Può modificare le sue risposte e reinviare.
+</div>
+{% endif %}
+
+<div id="form-area">
+  {% if step == "email" %}
+    {% include "questionario/partials/email_step.html" %}
+  {% else %}
+    {% include "questionario/partials/questionario_step.html" with token=token %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "questionario/base.html" %}
+
+{% block title %}Link non valido{% endblock %}
+
+{% block content %}
+<div class="grazie-box">
+  <div class="check">⚠️</div>
+  <h2>Link non valido o scaduto</h2>
+  <p>Il link che ha utilizzato non è più attivo (scade dopo 30 giorni).</p>
+  <p style="margin-top:1rem">
+    <a href="/" style="color:#4a7c59;font-weight:600">Compila il questionario inserendo la sua email →</a>
+  </p>
+</div>
+{% endblock %}

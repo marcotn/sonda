@@ -1,0 +1,18 @@
+{% if token %}
+  {% url 'questionario_invito' token as form_action %}
+{% else %}
+  {% url 'questionario' as form_action %}
+{% endif %}
+
+<form id="form-area"
+      method="post"
+      action="{{ form_action }}"
+      hx-post="{{ form_action }}"
+      hx-target="#form-area"
+      hx-swap="outerHTML"
+      hx-indicator="#loading">
+  {% csrf_token %}
+  {% include "questionario/partials/form_body.html" %}
+  <div id="loading" class="htmx-indicator">Invio in corso…</div>
+  <button type="submit" class="btn-invia">Invia le risposte</button>
+</form>

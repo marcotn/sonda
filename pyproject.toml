@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "sonda"
+version = "0.1.0"
+description = "Questionario commercianti — viabilità e sosta nel centro"
+authors = []
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+Django = "^5.1"
+psycopg = {version = "^3.2", extras = ["binary"]}
+django-htmx = "^1.21"
+whitenoise = "^6.8"
+gunicorn = "^23.0"
+dj-database-url = "^2.3"
+django-allauth = {version = "^65.0", extras = ["socialaccount"]}
+
+[tool.poetry.group.dev.dependencies]
+django-debug-toolbar = "^4.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"

@@ -1,0 +1,20 @@
+<form id="form-area"
+      method="post"
+      action="/"
+      hx-post="/"
+      hx-target="#form-area"
+      hx-swap="outerHTML"
+      hx-indicator="#loading">
+  {% csrf_token %}
+
+  <div class="domanda {% if form.email.errors %}has-error{% endif %}">
+    <div class="domanda-testo">Inserisca la sua email per accedere al questionario</div>
+    {{ form.email }}
+    {% if form.email.errors %}
+      <div class="errori">{% for e in form.email.errors %}{{ e }}{% endfor %}</div>
+    {% endif %}
+  </div>
+
+  <div id="loading" class="htmx-indicator">Verifica in corso…</div>
+  <button type="submit" class="btn-invia">Continua →</button>
+</form>

@@ -1,0 +1,47 @@
+{% load i18n %}
+
+{% for field in form %}
+  {% if field.name == "q1_giro_affari" %}
+    <div class="sezione-titolo">Impatto generale</div>
+  {% elif field.name == "q3_impatto_parcheggi" %}
+    <div class="sezione-titolo" style="margin-top:1.5rem">Zone disco e sosta a pagamento</div>
+  {% elif field.name == "q4_impatto_via_mazzini" %}
+    <div class="sezione-titolo" style="margin-top:1.5rem">Via Mazzini</div>
+  {% elif field.name == "q5_frequenza_residenti" %}
+    <div class="sezione-titolo" style="margin-top:1.5rem">Permessi residenti</div>
+  {% elif field.name == "q6_proposta" %}
+    <div class="sezione-titolo" style="margin-top:1.5rem">Proposte</div>
+  {% elif field.name == "q8_tipo_attivita" %}
+    <div class="sezione-titolo" style="margin-top:1.5rem">Per conoscerla meglio</div>
+  {% endif %}
+
+  <div class="domanda {% if field.errors %}has-error{% endif %}">
+    <div class="domanda-testo">
+      <span class="domanda-numero">{{ field.html_name|slice:"1:" }}</span>
+      {{ field.label }}
+    </div>
+
+    {% if field.field.widget.input_type == "radio" %}
+      <div class="opzioni">
+        {% for choice_value, choice_label in field.field.choices %}
+          <div class="opzione">
+            <input type="radio"
+                   name="{{ field.html_name }}"
+                   id="{{ field.auto_id }}_{{ forloop.counter }}"
+                   value="{{ choice_value }}"
+                   {% if field.value == choice_value %}checked{% endif %}>
+            <label for="{{ field.auto_id }}_{{ forloop.counter }}">{{ choice_label }}</label>
+          </div>
+        {% endfor %}
+      </div>
+    {% elif field.field.widget.input_type == "textarea" %}
+      {{ field }}
+    {% else %}
+      {{ field }}
+    {% endif %}
+
+    {% if field.errors %}
+      <div class="errori">{% for e in field.errors %}{{ e }}{% endfor %}</div>
+    {% endif %}
+  </div>
+{% endfor %}
